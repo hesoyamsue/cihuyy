@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Selamat Wisuda, Sayang</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#25102e;--bg2:#3b1840;--rose:#e9b7a8;--gold:#e8c27a;--ivory:#fbf1e6;--muted:#cdb3c4;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg) 70%) fixed;background-color:#25102e;color:var(--ivory);font-family:Jost,system-ui,sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden}
+h1,h2,.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.btn{font:400 16px Jost,sans-serif;letter-spacing:.04em;background:var(--gold);color:#2a1230;border:0;border-radius:999px;padding:12px 28px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+main{max-width:640px;margin:0 auto;padding:0 24px}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.cap{width:110px;margin-bottom:18px;color:var(--gold)}
+.hero p.small{color:var(--muted);margin:0 0 10px}
+h1{font-size:clamp(44px,12vw,84px);line-height:1.05;margin:0}
+h1 .deg{display:block;font-style:italic;color:var(--rose)}
+.date{margin-top:22px;color:var(--muted);max-width:30ch}
+.in{opacity:0;transform:translateY(14px);animation:up 1.2s forwards}
+.in:nth-child(2){animation-delay:.3s}.in:nth-child(3){animation-delay:.7s}.in:nth-child(4){animation-delay:1.1s}.in:nth-child(5){animation-delay:1.5s}
+@keyframes up{to{opacity:1;transform:none}}
+section{padding:56px 0}
+.letter p{font-size:19px;margin:0 0 22px;max-width:60ch}
+.letter p:first-child::first-letter{font-family:"Cormorant Garamond",serif;font-size:3.4em;float:left;line-height:.8;padding:6px 10px 0 0;color:var(--gold)}
+.praise{border-left:2px solid var(--gold);padding-left:22px;margin:0 0 34px}
+.praise h2{margin:0;font-size:clamp(30px,7vw,42px);color:var(--rose)}
+.praise p{margin:4px 0 0;color:var(--muted)}
+.praise:nth-of-type(2){margin-left:clamp(0px,6vw,48px)}
+.praise:nth-of-type(3){margin-left:clamp(0px,12vw,96px)}
+.end{text-align:center;padding-bottom:120px}
+.end h2{font-size:clamp(32px,8vw,52px);margin:0 0 14px}
+.sign{margin-top:28px;font-size:26px;color:var(--gold)}
+.photo{margin:0 auto;width:min(78vw,320px);background:var(--ivory);padding:12px 12px 16px;transform:rotate(-2deg);box-shadow:0 18px 40px rgba(0,0,0,.45);color:#3b1840;text-align:center}
+.photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#e9d9cf}
+.photo figcaption{font:italic 500 20px "Cormorant Garamond",Georgia,serif;margin-top:10px}
+.photo.empty img{visibility:hidden}
+.photo.empty{position:relative}
+.photo.empty::after{content:"Taruh foto kalian di sini (foto.jpg)";position:absolute;left:12px;right:12px;top:12px;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;padding:24px;border:1px dashed #b98a7c;font-size:15px}
+#music{position:fixed;right:max(16px,env(safe-area-inset-right,0px));top:calc(env(safe-area-inset-top,0px) + 14px);z-index:10;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(37,16,46,.7);color:var(--gold);font-size:18px;cursor:pointer}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:15}
+@media (prefers-reduced-motion:reduce){.in{animation:none;opacity:1;transform:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<button id="music" aria-label="Putar atau jeda musik" title="Musik">♪</button>
+<canvas id="c"></canvas>
+
+<main>
+  <div class="hero">
+    <svg class="cap in" viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><path d="M60 8 114 30 60 52 6 30Z"/><path d="M28 42v18c0 8 64 8 64 0V42"/><path d="M108 33v26"/><circle cx="108" cy="62" r="4" fill="currentColor"/></svg>
+    <p class="small in">Selamat wisuda, sayang</p>
+    <h1 class="in"><span id="who"></span><span class="deg">Annisa Shafira Herianto S.Pd.</span></h1>
+    <p class="date in">Hari ini, 6 Oktober 2026, kamu resmi menjadi Sarjana Pendidikan.</p>
+    <p class="date in" id="hint" style="font-size:14px">Ketuk layar untuk memutar musik</p>
+  </div>
+
+  <figure class="photo" style="margin-top:0">
+    <img src="sayang.JPG" alt="Foto wisuda" onerror="this.parentNode.classList.add('empty')">
+    <figcaption>6 Oktober 2026</figcaption>
+  </figure>
+
+  <section class="letter">
+    <p>Hari ini aku melihatmu walaupun cuman di youtube live heheh, berdiri dengan toga, dan rasanya semua malam panjang yang kamu lewati akhirnya menemukan jawabannya.</p>
+    <p>Menurut aku kamu pas banget dengan gelar S.Pd . alhamdulillah kamu berhasil sayang ^_^ , kamu berhasil melewati semua badai, aku bangga banget sama kamu sudah sampai di titik ini wahh keren banget!!!! .</p>
+    <p>Semoga ilmu yang kamu pelajari akan terus membantumu dalam menjalani hidup dan bisa menjadikan contoh baik untuk anak murid kamu ^_^.</p>
+  </section>
+
+  <section>
+    <div class="praise"><h2>Kerja kerasmu</h2><p>sedih, duka, tawa, sampai revisi, semuanya membuahkan hasil</p></div>
+    <div class="praise"><h2>Kesabaranmu</h2><p>kamu tetep berjuang meski kamu capek, lelah, banyak ngeluh</p></div>
+    <div class="praise"><h2>Hatimu</h2><p>Ini yang aku suka dari kamu, sesulitnya kamu diluar kegiatan guru kamu masih bisa memberikan ilmu dengan ikhlas</p></div>
+  </section>
+
+  <section class="end">
+    <h2>Aku memang ga terlalu membantu kamu banyak, tapi InsyaAllah selalu ada untuk kamu</h2>
+    <p>Terima kasih kamu sudah berjuang demi diri kamu ya bee bee . Hari ini kamu menang sepenuhnya ^_^ .</p>
+    <button class="btn" id="party">pencet bee ada efek nya wkwkwk</button>
+    <div class="sign serif"><em>Tertanda, Fahri Ismail. lopiu bee bee ^_^ </em></div>
+  </section>
+</main>
+
+<script>
+(function(){
+var hint=document.getElementById('hint'),manual=false;
+var AC=window.AudioContext||window.webkitAudioContext,ctx,master,playing=false,timer,next=0,step=0;
+var chords=[[261.63,329.63,392,523.25],[196,246.94,293.66,392],[220,261.63,329.63,440],[174.61,220,261.63,349.23]];
+var pat=[0,1,2,3,2,1,2,1];
+function pluck(f,t,v,d){var o=ctx.createOscillator(),g=ctx.createGain();o.type='triangle';o.frequency.value=f;
+g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.0008,t+d);
+o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.05)}
+function sched(){while(next<ctx.currentTime+.6){var c=chords[Math.floor(step/8)%4],s=step%8;
+pluck(c[pat[s]],next,.16,1.6);
+if(s===0)pluck(c[0]/2,next,.2,2.6);
+if(s===4)pluck(c[3]*2,next,.07,2.2);
+next+=.46;step++}}
+function startAudio(){if(!AC)return;
+if(!ctx){ctx=new AC();master=ctx.createGain();master.gain.value=.5;
+var dl=ctx.createDelay(),fb=ctx.createGain();dl.delayTime.value=.32;fb.gain.value=.38;
+master.connect(ctx.destination);master.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(ctx.destination)}
+ctx.resume();next=ctx.currentTime+.1;clearInterval(timer);timer=setInterval(sched,200);playing=true}
+function stopAudio(){clearInterval(timer);if(ctx)ctx.suspend();playing=false}
+document.getElementById('music').onclick=function(e){e.stopPropagation();manual=true;playing?stopAudio():startAudio();hint.style.display='none'};
+function first(e){if(e&&e.target&&e.target.closest&&e.target.closest('#music'))return;if(!playing&&!manual)startAudio();hint.style.display='none';
+['pointerdown','touchstart','keydown'].forEach(function(t){removeEventListener(t,first)})}
+['pointerdown','touchstart','keydown'].forEach(function(t){addEventListener(t,first)});
+
+var cv=document.getElementById('c'),cx=cv.getContext('2d'),ps=[],run=false;
+function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener('resize',size);
+function party(){var cols=['#e8c27a','#e9b7a8','#fbf1e6','#d9708a'];
+for(var i=0;i<140;i++)ps.push({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,vx:Math.random()*2-1,vy:2+Math.random()*3,r:3+Math.random()*4,a:Math.random()*6,c:cols[i%4]});
+if(!run){run=true;loop()}}
+function loop(){cx.clearRect(0,0,cv.width,cv.height);
+ps=ps.filter(function(p){return p.y<cv.height+20});
+ps.forEach(function(p){p.x+=p.vx+Math.sin(p.a)*.6;p.y+=p.vy;p.a+=.06;cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.r,p.r*1.6)});
+if(ps.length)requestAnimationFrame(loop);else run=false}
+document.getElementById('party').onclick=function(){
+if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;party()};
+})();
+</script>
+</body>
+</html>
